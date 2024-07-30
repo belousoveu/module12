@@ -3,19 +3,24 @@ import unittest
 
 
 class TestRunner(unittest.TestCase):
+    is_frozen = False
+
     def setUp(self):
         self.runner = Runner('test')
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run(self):
         for i in range(10):
             self.runner.run()
         self.assertEqual(self.runner.distance, 100, 'Test Runner.run() - failed!')
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_walk(self):
         for i in range(10):
             self.runner.walk()
         self.assertEqual(self.runner.distance, 50, 'Test Runner.walk() - failed!')
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_challenge(self):
         test_obj2 = Runner('test2')
         for i in range(10):

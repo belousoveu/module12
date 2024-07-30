@@ -3,6 +3,7 @@ import unittest
 
 
 class TestTournament(unittest.TestCase):
+    is_frozen = True
 
     @classmethod
     def setUpClass(cls):
@@ -13,11 +14,13 @@ class TestTournament(unittest.TestCase):
         for result in cls.all_results:
             print(result)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def setUp(self):
         self.runner1 = Runner('Усэйн', 10)
         self.runner2 = Runner('Андрей', 9)
         self.runner3 = Runner('Ник', 3)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test1(self):
         tournament = Tournament(90, self.runner1, self.runner3)
         result = tournament.start()
@@ -25,6 +28,7 @@ class TestTournament(unittest.TestCase):
         self.assertEqual(result[1].name, self.runner1.name, 'Test for first runner - failed!')
         self.all_results.append(result)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test2(self):
         tournament = Tournament(90, self.runner2, self.runner3)
         result = tournament.start()
@@ -32,6 +36,7 @@ class TestTournament(unittest.TestCase):
         self.assertEqual(result[1].name, self.runner2.name, 'Test for first runner - failed!')
         self.all_results.append(result)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test3(self):
         tournament = Tournament(90, self.runner2, self.runner1, self.runner3)
         result = tournament.start()
