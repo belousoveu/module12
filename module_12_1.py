@@ -1,27 +1,40 @@
-from runner import Runner
+from rt_with_exceptions import Runner
 import unittest
+import logging
 
 
 class TestRunner(unittest.TestCase):
     is_frozen = False
 
-    def setUp(self):
-        self.runner = Runner('test')
-
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run(self):
-        for i in range(10):
-            self.runner.run()
-        self.assertEqual(self.runner.distance, 100, 'Test Runner.run() - failed!')
+        try:
+            self.runner = Runner(50)
+            for i in range(10):
+                self.runner.run()
+            self.assertEqual(self.runner.distance, 100, 'Test Runner.run() - failed!')
+            logging.info('"test_run" выполнен успешно')
+        except TypeError:
+            logging.warning('Неверный тип данных для объекта Runner', exc_info=True)
+        except ValueError:
+            logging.warning('Неверное значение скорости для объекта Runner', exc_info=True)
 
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_walk(self):
-        for i in range(10):
-            self.runner.walk()
-        self.assertEqual(self.runner.distance, 50, 'Test Runner.walk() - failed!')
+        try:
+            self.runner = Runner('test', -10)
+            for i in range(10):
+                self.runner.walk()
+            self.assertEqual(self.runner.distance, 50, 'Test Runner.walk() - failed!')
+            logging.info('"test_walk" выполнен успешно')
+        except TypeError:
+            logging.warning('Неверный тип данных для объекта Runner', exc_info=True)
+        except ValueError:
+            logging.warning('Неверное значение скорости для объекта Runner', exc_info=True)
 
     @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_challenge(self):
+        self.runner = Runner('test')
         test_obj2 = Runner('test2')
         for i in range(10):
             self.runner.walk()
